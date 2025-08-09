@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # MySQL数据库服务
+  mysql:
+    image: mysql:8.0
+    container_name: book-lesson-mysql
+    restart: unless-stopped
+    environment:
+      # MySQL根密码
+      MYSQL_ROOT_PASSWORD: root123456
+      # 创建数据库
+      MYSQL_DATABASE: book_lesson
+      # 创建用户
+      MYSQL_USER: book_user
+      # 用户密码
+      MYSQL_PASSWORD: user123456
+      # 字符集
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
+    ports:
+      # 主机端口:容器端口
+      - '3306:3306'
+    volumes:
+      # 数据持久化 - 将容器内的数据目录映射到项目目录
+      - ./docker/mysql/data:/var/lib/mysql
+    networks:
+      - book-lesson-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  # MongoDB数据库服务
+  mongodb:
+    image: mongo:7.0
+    container_name: book-lesson-mongodb
+    restart: unless-stopped
+    environment:
+      # MongoDB根用户名
+      MONGO_INITDB_ROOT_USERNAME: admin
+      # MongoDB根密码
+      MONGO_INITDB_ROOT_PASSWORD: admin123456
+      # 创建数据库
+      MONGO_INITDB_DATABASE: book_lesson
+    ports:
+      # 主机端口:容器端口
+      - '27017:27017'
+    volumes:
+      # 数据持久化
+      - ./docker/mongodb/data:/data/db
+    networks:
+      - book-lesson-network
+    command: mongod --auth
+
+  # Redis缓存服务
+  redis:
+    image: redis:7.2-alpine
+    container_name: book-lesson-redis
+    restart: unless-stopped
+    ports:
+      # 主机端口:容器端口
+      - '6379:6379'
+    volumes:
+      # 数据持久化
+      - ./docker/redis/data:/data
+    networks:
+      - book-lesson-network
+    command: redis-server --appendonly yes
+
+# 网络定义
+networks:
+  book-lesson-network:
+    driver: bridge
