@@ -65,6 +65,26 @@ services:
       - book-lesson-network
     command: redis-server --appendonly yes
 
+  # Adminer数据库管理工具
+  adminer:
+    image: adminer:4.8.1
+    container_name: book-lesson-adminer
+    restart: unless-stopped
+    ports:
+      # 主机端口:容器端口 - 通过8080端口访问Adminer
+      - '8080:8080'
+    environment:
+      # 设置默认数据库类型为MySQL
+      ADMINER_DEFAULT_SERVER: mysql
+      # 设置默认数据库主机
+      ADMINER_DEFAULT_DB: book_lesson
+    networks:
+      - book-lesson-network
+    depends_on:
+      - mysql
+      - mongodb
+      - redis
+
 # 网络定义
 networks:
   book-lesson-network:

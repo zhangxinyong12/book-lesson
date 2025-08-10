@@ -52,6 +52,8 @@ $ mau deploy
 
 ## 启动docker
 
+详细的 Docker 使用说明请查看 [Docker 使用指南](docker-readme.md)
+
 ```bash
 docker-compose up -d
 ```
@@ -61,3 +63,36 @@ docker-compose up -d
 ```bash
 docker-compose down
 ```
+
+## 数据库管理工具 Adminer
+
+项目集成了 Adminer 数据库管理工具，支持管理 MySQL、MongoDB 和 Redis。
+
+### 访问 Adminer
+
+启动容器后，在浏览器中访问：`http://localhost:8080`
+
+### 连接数据库
+
+#### MySQL 连接信息
+
+- **系统**: MySQL
+- **服务器**: mysql
+- **用户名**: book_user 或 root
+- **密码**: user123456 或 root123456
+- **数据库**: book_lesson
+
+#### MongoDB 连接信息
+
+- **系统**: MongoDB
+- **服务器**: mongodb
+- **用户名**: admin
+- **密码**: admin123456
+- **数据库**: book_lesson
+
+#### Redis 连接信息
+
+- **系统**: Redis
+- **服务器**: redis
+- **端口**: 6379
+- **密码**: 无（默认配置）
