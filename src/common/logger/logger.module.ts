@@ -32,4 +32,4 @@ import {
   ],
   exports: [WinstonModule],
 })
-export class LogsModule {}
+export class LoggerModule {}

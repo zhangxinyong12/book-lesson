@@ -5,6 +5,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
+import { Profile } from 'src/user/entities/profile.entity';
+import { Log } from 'src/logs/entities/log.entity';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Module({
   imports: [
@@ -18,8 +21,8 @@ import { User } from 'src/user/entities/user.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        // 实体 自动导入
-        entities: [User],
+        // 实体
+        entities: [User, Profile, Log, Role],
         synchronize: configService.get('DB_SYNCHRONIZE') === 'true', // 自动同步数据库结构 生产环境需要关闭
         logging: configService.get('DB_LOGGING') === 'true',
       }),
