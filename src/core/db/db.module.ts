@@ -21,7 +21,7 @@ import { Role } from 'src/roles/entities/role.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        // 实体
+        // 实体 - 所有需要创建表的实体类都要在这里注册
         entities: [User, Profile, Log, Role],
         synchronize: configService.get('DB_SYNCHRONIZE') === 'true', // 自动同步数据库结构 生产环境需要关闭
         logging: configService.get('DB_LOGGING') === 'true',
